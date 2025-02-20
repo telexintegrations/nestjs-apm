@@ -1,73 +1,100 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS APM (Application Performance Monitoring)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+NestJS APM is a monitoring solution integrated with Telex to track application performance and provide insights into request handling, errors, and system metrics for NestJS applications.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Automatic request and response logging
+- Error tracking and tracing
+- Performance monitoring (latency, throughput, etc.)
+- Custom transaction and span tracking
+- Integration with Telex for real-time monitoring
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (>=16.x)
+- [NestJS](https://nestjs.com/) framework
+- [Telex](https://telex.im) for real-time monitoring
+- Docker & Docker Compose (if deploying with containers)
 
 ## Installation
 
-```bash
-$ npm install
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/your-repo/nestjs-apm.git
+   cd nestjs-apm
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Copy the environment file and update configurations:
+
+   ```sh
+   touch .env
+   ```
+
+   Modify `.env` with your APM server details:
+
+   ```env
+   TELEX_WEBHOOK_URL=https://your-telex-webhook-url
+   ```
+
+## Running the Application
+
+### Development Mode
+
+```sh
+npm run start:dev
 ```
 
-## Running the app
+### Production Mode
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+npm run build
+npm run start:prod
 ```
 
-## Test
+### Running with Docker
 
-```bash
-# unit tests
-$ npm run test
+1. Build and start the container:
 
-# e2e tests
-$ npm run test:e2e
+   ```sh
+   docker-compose up -d --build
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+2. Check running logs:
 
-## Support
+   ```sh
+   docker logs -f server
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## API Endpoints
 
-## Stay in touch
+| Method | Endpoint          | Description                              |
+| ------ | ----------------- | ---------------------------------------- |
+| GET    | `/simulate-error` | Simulate an error to test error tracking |
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Logging & Monitoring
+
+NestJS APM uses the following:
+
+- [Telex](https://www.telex.im)labels:
+
+## Contributing
+
+1. Fork the repository
+2. Create a new feature branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Create a Pull Request
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License.
