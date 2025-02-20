@@ -10,6 +10,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('integration-json')
+  getIntegrationJson() {
+    return this.appService.getIntegrationJson();
+  }
+
   @Get('simulate-error')
   throwError() {
     throw new Error('Simulated error');
