@@ -4,5 +4,15 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true
-  }
+  },
+  "assets": [
+    {
+      "include": "src/telex/telex.worker.ts",
+      "outDir": "dist/telex"
+    },
+    {
+      "include": "src/telex/performance.worker.ts",
+      "outDir": "dist/telex"
+    }
+  ]
 }

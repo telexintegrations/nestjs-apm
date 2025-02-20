@@ -1,3 +1,7 @@
 {
-  "name": "Integration"
+  "name": "Integration",
+  "description": "Integration",
+  "version": "1.0.0",
+  "author": "Author",
+  "license": "MIT"
 }
