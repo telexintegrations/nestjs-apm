@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('simulate-error')
+  throwError() {
+    throw new Error('Simulated error');
+  }
 }

@@ -51,7 +51,7 @@ export class PerformanceMiddleware implements NestMiddleware {
         this.totalErrors++;
       }
 
-      if (responseTime > 0.3) {
+      if (responseTime > 3000) {
         const details = {
           method: req.method,
           url: req.url,

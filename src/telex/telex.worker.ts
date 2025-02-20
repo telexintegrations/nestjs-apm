@@ -9,9 +9,10 @@ parentPort?.on('message', async (data) => {
     const fixedStack = stack
       .replace(/\\n/g, '\n')
       .replace(/\\t/g, '    ')
-      .replace(/ode_modules/g, 'node_modules');
+      .replace(/ode_modules/g, 'node_modules')
+      .replace(/estjs-apm/g, 'nestjs-apm');
 
-    const telexMessage = `Error detected: ${method} ${url} \n${message} \nstack: ${fixedStack}`;
+    const telexMessage = `🔕Error detected: ${method} ${url} \nmessage: ${message} \nstack: ${fixedStack}`;
 
     // Construct the payload
     const payload = {
@@ -19,7 +20,6 @@ parentPort?.on('message', async (data) => {
       status: 'error',
       username: 'NestJS APM',
       message: telexMessage,
-      //   message: `Details: \nurl: ${url} \nmethod: ${method} \nmessage: ${message} \nstack: ${fixedStack}`,
     };
 
     const response = await axios.post(webhookUrl, payload, { timeout: 5000 });

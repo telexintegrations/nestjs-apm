@@ -5,7 +5,7 @@ parentPort?.on('message', async (data) => {
   try {
     const { webhookUrl, details } = data;
 
-    const telexMessage = `High latency detected: ${details.method} ${details.url} took ${details.responseTime} ms`;
+    const telexMessage = `🔔High latency detected: ${details.method} ${details.url} took ${details.responseTime} ms`;
 
     const payload = {
       event_name: 'New Performance Alert',
