@@ -85,7 +85,7 @@ npm run start:prod
 
 NestJS APM uses the following:
 
-- [Telex](https://www.telex.im)labels:
+- [Telex](https://www.telex.im)
 
 ## Contributing
 
