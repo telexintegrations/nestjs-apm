@@ -1,13 +1,15 @@
 import { parentPort } from 'worker_threads';
 import axios from 'axios';
 
-parentPort?.on('message', async (data) => {
+import { ITelexNotificationWorkerData, ITelexPayload } from './telex.interface';
+
+parentPort?.on('message', async (data: ITelexNotificationWorkerData) => {
   try {
     const { webhookUrl, details } = data;
 
     const telexMessage = `🔔High latency detected: ${details.method} ${details.url} took ${details.responseTime} ms`;
 
-    const payload = {
+    const payload: ITelexPayload = {
       event_name: 'New Performance Alert',
       status: 'success',
       username: 'NestJS APM',
@@ -29,17 +31,6 @@ parentPort?.on('message', async (data) => {
     process.exit(0);
   } catch (error) {
     console.error('Error sending to Telex:', error.message);
-
-    if (error.response) {
-      console.error('Telex response error details:', error.response.data);
-    } else if (error.code === 'ECONNABORTED') {
-      console.error('Request timed out');
-    } else if (error.request) {
-      console.error('No response received from Telex:', error.request);
-    } else {
-      console.error('Error setting up the request:', error.message);
-    }
-
     parentPort?.postMessage('Error sending to Telex');
     process.exit(1);
   }

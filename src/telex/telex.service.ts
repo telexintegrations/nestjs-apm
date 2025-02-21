@@ -3,6 +3,11 @@ import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import { Worker } from 'worker_threads';
 
+import {
+  ITelexErrorDetails,
+  ITelexNotificationDetails,
+} from './telex.interface';
+
 @Injectable()
 export class TelexService {
   private readonly webhookUrl: string;
@@ -11,7 +16,7 @@ export class TelexService {
     this.webhookUrl = configService.get<string>('TELEX_WEBHOOK_URL');
   }
 
-  async sendErrorToTelex(message: string, errorDetails: any): Promise<void> {
+  async sendErrorToTelex(details: ITelexErrorDetails): Promise<void> {
     const workerPath = path.resolve(
       __dirname,
       '..',
@@ -40,13 +45,12 @@ export class TelexService {
 
       worker.postMessage({
         webhookUrl: this.webhookUrl,
-        message: message,
-        errorDetails: errorDetails,
+        details: details,
       });
     });
   }
 
-  async sendNotification(details: any): Promise<void> {
+  async sendNotification(details: ITelexNotificationDetails): Promise<void> {
     const workerPath = path.resolve(
       __dirname,
       '..',

@@ -1,8 +1,9 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { performance } from 'perf_hooks';
-import { TelexService } from '../../telex/telex.service';
 import * as client from 'prom-client';
 
+import { TelexService } from '../../telex/telex.service';
+import { ITelexNotificationDetails } from 'src/telex/telex.interface';
 @Injectable()
 export class PerformanceMiddleware implements NestMiddleware {
   private readonly logger = new Logger('PerformanceMiddleware');
@@ -52,15 +53,14 @@ export class PerformanceMiddleware implements NestMiddleware {
       }
 
       if (responseTime > 3000) {
-        const details = {
+        const details: ITelexNotificationDetails = {
           method: req.method,
           url: req.url,
           responseTime: responseTime.toFixed(3),
           statusCode: res.statusCode,
         };
-        this.telexService.sendNotification(details).catch((err) => {
-          this.logger.error('Failed to send notification:', err);
-        });
+
+        this.telexService.sendNotification(details);
       }
 
       // Calculate error rate
