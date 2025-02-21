@@ -4,6 +4,8 @@
 
 NestJS APM is a monitoring solution integrated with Telex to track application performance and provide insights into request handling, errors, and system metrics for NestJS applications.
 
+![Screenshot](docs/images/nestjs-apm-details.png)
+
 ## Features
 
 - Automatic request and response logging
@@ -24,7 +26,7 @@ NestJS APM is a monitoring solution integrated with Telex to track application p
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/your-repo/nestjs-apm.git
+   git clone https://github.com/telexintegrations/nestjs-apm.git
    cd nestjs-apm
    ```
 
@@ -77,14 +79,68 @@ npm run start:prod
 
 ## API Endpoints
 
-| Method | Endpoint          | Description                              |
-| ------ | ----------------- | ---------------------------------------- |
-| GET    | `/simulate-error` | Simulate an error to test error tracking |
+| Method | Endpoint            | Description                              |
+| ------ | ------------------- | ---------------------------------------- |
+| GET    | `/integration-json` | The Integration Json Data                |
+| GET    | `/simulate-error`   | Simulate an error to test error tracking |
+| GET    | `/simulate-slow`    | Simulate a slow request to test latency  |
+
+## Integration JSON
+
+The integration JSON file defined at the route /integration-json defines all the details needed for this integration to work on Telex.
+
+```bash
+GET /integration-json
+```
+
+## Error Tracking
+
+To simulate an error, you can use the following endpoint:
+
+```bash
+GET /simulate-error
+```
+
+![Screenshot](docs/images/nestjs-apm-error-alert.png)
+
+## Latency Testing
+
+To simulate a slow request, you can use the following endpoint:
+
+```bash
+GET /simulate-slow
+```
+
+![Screenshot](docs/images/nestjs-apm-performance-alert.png)
+
+## Worker Threading
+
+This project uses worker threads to handle long-running tasks.
+
+- sending errors to telex
+- sending latency to telex
+
+## Testing
+
+To run tests, use the following command:
+
+```bash
+npm run test
+```
+
+also for end to end testing
+
+```bash
+npm run test:e2e
+```
 
 ## Logging & Monitoring
 
 NestJS APM uses the following:
 
+- [Exception Filter](https://docs.nestjs.com/exception-filters)
+- [Logger](https://docs.nestjs.com/techniques/logger)
+- [PromClient](https://www.npmjs.com/package/prom-client)
 - [Telex](https://www.telex.im)
 
 ## Contributing
