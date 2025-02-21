@@ -1,6 +1,6 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { performance } from 'perf_hooks';
-import { TelexService } from 'src/telex/telex.service';
+import { TelexService } from '../../telex/telex.service';
 import * as client from 'prom-client';
 
 @Injectable()
