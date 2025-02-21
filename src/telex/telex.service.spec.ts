@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TelexService } from './telex.service';
 import { ConfigService } from '@nestjs/config';
 import { Worker } from 'worker_threads';
-import { response } from 'express';
 
 jest.mock('worker_threads', () => {
   return {
@@ -49,7 +48,7 @@ describe('TelexService', () => {
 
   it('should send error to Telex', async () => {
     await expect(
-      telexService.sendErrorToTelex('Test error', {
+      telexService.sendErrorToTelex({
         url: '/test',
         method: 'GET',
         message: 'Error',
@@ -64,7 +63,8 @@ describe('TelexService', () => {
       telexService.sendNotification({
         url: '/slow',
         method: 'GET',
-        responseTime: 4500,
+        responseTime: '4500',
+        statusCode: 200,
       }),
     ).resolves.toBeUndefined();
     expect(Worker).toHaveBeenCalled();

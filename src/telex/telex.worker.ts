@@ -1,21 +1,19 @@
 import { parentPort } from 'worker_threads';
 import axios from 'axios';
 
-parentPort?.on('message', async (data) => {
-  try {
-    const { webhookUrl, errorDetails } = data;
+import { ITelexErrorWorkerData, ITelexPayload } from './telex.interface';
 
-    const { url, method, message, stack } = errorDetails;
-    const fixedStack = stack
-      .replace(/\\n/g, '\n')
-      .replace(/\\t/g, '    ')
-      .replace(/ode_modules/g, 'node_modules')
-      .replace(/estjs-apm/g, 'nestjs-apm');
+parentPort?.on('message', async (data: ITelexErrorWorkerData) => {
+  try {
+    const { webhookUrl, details } = data;
+
+    const { url, method, message, stack } = details;
+    const fixedStack = stack.replace(/\\n/g, '\n').replace(/\\t/g, '    ');
 
     const telexMessage = `🔕Error detected: ${method} ${url} \nmessage: ${message} \nstack: ${fixedStack}`;
 
     // Construct the payload
-    const payload = {
+    const payload: ITelexPayload = {
       event_name: 'New Error Alert',
       status: 'error',
       username: 'NestJS APM',
@@ -37,11 +35,6 @@ parentPort?.on('message', async (data) => {
     process.exit(0);
   } catch (error) {
     console.error('Error sending to Telex:', error.message);
-    if (error.response) {
-      console.error('Telex response error details:', error.response.data);
-    } else if (error.code === 'ECONNABORTED') {
-      console.error('Request timed out');
-    }
     parentPort?.postMessage('Error sending to Telex');
     process.exit(1);
   }

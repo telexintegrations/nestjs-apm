@@ -1,6 +1,8 @@
 import { Catch, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
+
 import { TelexService } from '../telex/telex.service';
+import { ITelexErrorDetails } from 'src/telex/telex.interface';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -13,22 +15,36 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     let status = 500;
     let message = 'Internal server error';
-    let errorDetails = {};
+    let details: ITelexErrorDetails = {
+      url: request.url,
+      method: request.method,
+      message: message,
+      stack: '',
+    };
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = exception.message;
-      errorDetails = exception.getResponse();
+      const exceptionResponse = exception.getResponse();
+
+      details = {
+        url: request.url,
+        method: request.method,
+        message:
+          typeof exceptionResponse === 'string' ? exceptionResponse : message,
+        stack: '',
+      };
     } else if (exception instanceof Error) {
       message = exception.message;
-      errorDetails = {
+
+      details = {
         url: request.url,
         method: request.method,
         message: exception.message,
-        stack: exception.stack,
+        stack: exception.stack || '',
       };
 
-      this.telexService.sendErrorToTelex(message, errorDetails);
+      this.telexService.sendErrorToTelex(details);
     }
 
     response.status(status).json({
