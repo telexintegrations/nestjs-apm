@@ -15,21 +15,15 @@
     "integration_type": "modifier",
     "integration_category": "Performance Monitoring",
     "key_features": [
-      "exception-handling",
-      "request-response-time",
-      "performance-monitoring",
-      "error-rate",
-      "throughput"
+      "Global Exception Handling.",
+      "Real Time Error Monitoring.",
+      "Request Response Time.",
+      "Application Performance Monitoring.",
+      "Error Rate.",
+      "Throughput."
     ],
     "author": "Edwin Edjokpa",
-    "settings": [
-      {
-        "label": "channel_webhook",
-        "type": "text",
-        "required": true,
-        "default": ""
-      }
-    ],
+    "settings": [],
     "target_url": "https://ping.telex.im/v1/webhooks/0195186d-b707-7f9e-bc7f-c75f841ef281",
     "tick_url": "https://nestjs-apm.primatexcode.com"
   }

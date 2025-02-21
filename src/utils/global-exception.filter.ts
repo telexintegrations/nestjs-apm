@@ -1,6 +1,6 @@
 import { Catch, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
-import { TelexService } from 'src/telex/telex.service';
+import { TelexService } from '../telex/telex.service';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
